@@ -39,13 +39,6 @@
 
 }
 
-
-.footer {
-
-  margin-top: auto;
-  ;
-}
-
 .image {
   height: 80px;
   width: 80px;
@@ -57,7 +50,20 @@
   margin-left: 20px;
 }
 
+.footer {
+  display: flex;
+  justify-content: space-around;
+
+
+}
+
+.user {
+  color: white;
+  font-weight: bold;
+}
+
 .logout {
-  width: 50%;
-  height: 50%;
+  width: 20%;
+  height: 20%;
+  cursor: pointer;
 }

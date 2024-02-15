@@ -1,56 +1,16 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { login, logout } from '../reducers/user';
+import { login } from '../reducers/user';
 import Home from './Home';
 
 import Styles from "../styles/Login.module.css";
+import SignUp from './SignUp';
+import SignIn from './SignIn';
 
 function Login() {
 
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.value);
-  const [signupFirstname, setSignupFirstname] = useState('');
-  const [signupUsername, setSignupUsername] = useState('');
-  const [signupPassword, setSignupPassword] = useState('');
-
-  const [signinUsername, setSigninUsername] = useState('');
-  const [signinPassword, setSigninPassword] = useState('');
-
-  const handleRegister = () => {
-    fetch('http://localhost:3000/users/signup', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ firstname: signupFirstname, username: signupUsername, password: signupPassword }),
-    }).then(response => response.json())
-      .then(data => {
-        if (data.result) {
-          //ou (data)
-          dispatch(login({ firstname: signupFirstname, username: signupUsername, token: data.token }));
-          setSignupUsername('');
-          setSignupPassword('');
-          setSignupFirstname('');
-          // setIsModalVisible(false)
-        }
-      });
-  };
-  console.log(signinPassword, signinUsername)
-
-  const handleConnection = () => {
-    fetch('http://localhost:3000/users/signin', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username: signinUsername, password: signinPassword }),
-    }).then(response => response.json())
-      .then(data => {
-        console.log(data)
-        if (data.result) {
-          dispatch(login({ username: signinUsername, token: data.token }));
-          setSigninUsername('');
-          setSigninPassword('');
-          // setIsModalVisible(false)
-        }
-      });
-  };
 
   if (user.token) {
     return <Home />;
@@ -71,18 +31,8 @@ function Login() {
           <h2 className={Styles.text}>Join Hackatweet today.</h2>
           <div className={Styles.buttons}>
 
-            <div className={Styles.signupButton}>
-              <button id="register" onClick={() => handleRegister()}>Sign Up</button>
-              <input type="text" placeholder="Firstname" id="signupFirstname" onChange={(e) => setSignupFirstname(e.target.value)} value={signupFirstname} />
-              <input type="text" placeholder="Username" id="signupUsername" onChange={(e) => setSignupUsername(e.target.value)} value={signupUsername} />
-              <input type="password" placeholder="Password" id="signupPassword" onChange={(e) => setSignupPassword(e.target.value)} value={signupPassword} />
-            </div>
-
-            <div className={Styles.signinButton}>
-              <button id="connection" onClick={() => handleConnection()}>Sign In</button>
-              <input type="text" placeholder="Username" id="signinUsername" onChange={(e) => setSigninUsername(e.target.value)} value={signinUsername} />
-              <input type="password" placeholder="Password" id="signinPassword" onChange={(e) => setSigninPassword(e.target.value)} value={signinPassword} />
-            </div>
+            <SignUp />
+            <SignIn />
           </div>
         </div>
       </div>
