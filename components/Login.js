@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { login, logout } from '../reducers/user';
+import Home from './Home';
+
 import Styles from "../styles/Login.module.css";
 
 function Login() {
 
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.value);
   const [signupFirstname, setSignupFirstname] = useState('');
   const [signupUsername, setSignupUsername] = useState('');
   const [signupPassword, setSignupPassword] = useState('');
@@ -19,34 +25,40 @@ function Login() {
       .then(data => {
         if (data.result) {
           //ou (data)
-          dispatch(login({ username: signupUsername, token: data.token }));
+          dispatch(login({ firstname: signupFirstname, username: signupUsername, token: data.token }));
           setSignupUsername('');
           setSignupPassword('');
           setSignupFirstname('');
           // setIsModalVisible(false)
         }
-      }); const handleConnection = () => {
-
-        fetch('http://localhost:3000/users/signin', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username: signinUsername, password: signinPassword }),
-        }).then(response => response.json())
-          .then(data => {
-            if (data.result) {
-              //(data)
-              dispatch(login({ username: signinUsername, token: data.token }));
-              setSigninUsername('');
-              setSigninPassword('');
-              // setIsModalVisible(false)
-            }
-          });
-      };
-
+      });
   };
+  console.log(signinPassword, signinUsername)
+
+  const handleConnection = () => {
+    fetch('http://localhost:3000/users/signin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: signinUsername, password: signinPassword }),
+    }).then(response => response.json())
+      .then(data => {
+        console.log(data)
+        if (data.result) {
+          dispatch(login({ username: signinUsername, token: data.token }));
+          setSigninUsername('');
+          setSigninPassword('');
+          // setIsModalVisible(false)
+        }
+      });
+  };
+
+  if (user.token) {
+    return <Home />;
+  }
 
   return (
     <div className={Styles.container}>
+
       <div className={Styles.leftContent}>
         <img src="mg-4a97cd7c-w2279.jpeg" alt="Background" className={Styles.backgroundImage} />
       </div>
