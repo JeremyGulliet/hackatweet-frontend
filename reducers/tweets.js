@@ -18,11 +18,11 @@ export const tweetsSlice = createSlice({
 
         deleteTweet: (state, action) => {
             state.value.filter(tweet => tweet.user !== action.payload.user) //content si fonctionne pas
-        }
+        },
 
-        // updateTweet: (state, action) => {
-        //     state.value
-        // }
+        updateTweet: (state, action) => {
+            state.value = action.payload
+        },
 
     },
 });

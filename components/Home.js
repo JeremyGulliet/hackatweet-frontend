@@ -12,7 +12,7 @@ function Home() {
   const [remainingChars, setRemainingChars] = useState(280);
   //const [showTweets, setTweets] = useState([]); //Etat pour stoker les tweets ajoutés
 
-  console.log(message);
+  //console.log(message);
 
   const handleMessageChange = (event) => {
     const inputMessage = event.target.value;
@@ -31,7 +31,7 @@ function Home() {
       .then(data => {
         dispatch(loadTweets(data.tweet))
       })
-  }, []);
+  }, [message]);
 
   const handleClickIcon = () => {
     console.log('Direction Home');
