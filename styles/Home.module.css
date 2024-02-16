@@ -44,13 +44,6 @@
 
 }
 
-
-.footer {
-
-  margin-top: auto;
-  ;
-}
-
 .image {
   height: 60px;
   width: 60px;
@@ -62,9 +55,61 @@
   margin-left: 20px;
 }
 
+.footer {
+  display: flex;
+  justify-content: space-around;
+
+
+}
+
+.user {
+  color: white;
+  font-weight: bold;
+}
+
 .logout {
-  width: 50%;
-  height: 50%;
+  width: 20%;
+  height: 20%;
+  cursor: pointer;
+}
+
+
+
+.addmessage{
+
+  background-color: #151F2B ;
+  border: none; 
+  border-bottom: 2px solid gray;
+  height: 50px;
+  width: 80%;
+  font-size: 22px;
+  margin-left: 10%;
+  color: white;
+  margin-top: 15px;
+  
+
+}
+
+.tweetButton {
+
+  border-radius: 20px;
+  border:none;
+  height: 30px;
+  width: 100px;
+  background-color: #3E9BEF ;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  margin-left: 75%;
+  margin-top: 25px;
+  
+  
+}
+
+.addTweet {
+
+  border-bottom: 1px solid gray;
+  height: 20%;
 }
 
 
