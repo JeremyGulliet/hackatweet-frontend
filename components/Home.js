@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '../styles/Home.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { logout } from '../reducers/user';
 import { useDispatch, useSelector } from 'react-redux';
+import { addTweet } from '../reducers/tweets';
 
 function Home() {
   const [message, setMessage] = useState('');
   const [remainingChars, setRemainingChars] = useState(280);
+  const [tweets, setTweets] = useState([]); //Etat pour stoker les tweets ajoutés
 
   const handleMessageChange = (event) => {
     const inputMessage = event.target.value;
@@ -18,6 +20,15 @@ function Home() {
 
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.value);
+  const tweet = useSelector((state) => state.tweets.value)
+
+  // useEffect(() => {
+  //   fetch('http://localhost:3000/tweets')
+  //   .then(response => response.json())
+  //   .then (data =>{
+  //     dispatch(addTweet(data))
+  //   })
+  // },[]);
 
   const handleClickIcon = () => {
     console.log('Direction Home');
@@ -27,6 +38,23 @@ function Home() {
   const handleClickLogout = () => {
     console.log('Logout');
     dispatch(logout());
+  }
+
+  const handleAddTweet = () => {
+    
+    fetch(`http://localhost:3000/tweet/${user.token}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ content: message }),
+}).then(response => response.json())
+    .then(data => {
+        console.log(data)
+        if (data.result) {
+            dispatch(addTweet({ content: message }));
+            setMessage('');
+        }
+    });
+   
   }
 
 
@@ -50,10 +78,18 @@ function Home() {
           <div className={styles.addTweet}>
             <input className={styles.addmessage} type="text" placeholder=" What's up?"value={message} onChange={handleMessageChange} maxLength={280}/>
             <span className={styles.remainingChars}>{remainingChars}</span>
-            <button className={styles.tweetButton} id="btn-add">Tweet</button>
+            <button className={styles.tweetButton} onClick={handleAddTweet}>Tweet</button>
           </div>
 
-          <div></div>
+          <div className={styles.tweetAdded}>
+            
+              <div key={index} className={styles.tweet}>{tweet}</div>
+            
+          </div>
+
+
+
+
           <div></div>
         </div>
         <div className={styles.containerRight}>
