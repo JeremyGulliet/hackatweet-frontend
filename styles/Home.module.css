@@ -16,26 +16,31 @@
   flex-direction: column;
   width: 30%;
   height: 100vh;
+  
 }
 
 .containerCenter {
-  border-left: 3px solid grey;
-  border-right: 3px solid grey;
-  width: 30%;
+  border-left: 1px solid grey;
+  border-right: 1px solid grey;
+  width: 50%;
+  font-size: 9px;
+  
   flex-grow: 1;
   color: white;
 }
 
 .containerRight {
-  width: 30%;
+  width: 40%;
   margin-left: auto;
   color: white;
+  font-size:9px ;
 
 }
 
 .header {
   margin-bottom: auto;
   height: 10%;
+  
 
 }
 
@@ -47,8 +52,8 @@
 }
 
 .image {
-  height: 80px;
-  width: 80px;
+  height: 60px;
+  width: 60px;
   margin-left: 20px;
   transform: rotate(180deg);
 }
@@ -60,4 +65,43 @@
 .logout {
   width: 50%;
   height: 50%;
+}
+
+
+
+.addmessage{
+
+  background-color: #151F2B ;
+  border: none; 
+  border-bottom: 2px solid gray;
+  height: 50px;
+  width: 80%;
+  font-size: 22px;
+  margin-left: 10%;
+  color: white;
+  margin-top: 15px;
+  
+
+}
+
+.tweetButton {
+
+  border-radius: 20px;
+  border:none;
+  height: 30px;
+  width: 100px;
+  background-color: #3E9BEF ;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  margin-left: 75%;
+  margin-top: 25px;
+  
+  
+}
+
+.addTweet {
+
+  border-bottom: 1px solid gray;
+  height: 20%;
 }
