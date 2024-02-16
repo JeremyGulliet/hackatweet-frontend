@@ -21,6 +21,8 @@ function Home() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.value);
   const tweet = useSelector((state) => state.tweets.value)
+  
+
 
   // useEffect(() => {
   //   fetch('http://localhost:3000/tweets')
@@ -83,13 +85,10 @@ function Home() {
 
           <div className={styles.tweetAdded}>
             
-              <div key={index} className={styles.tweet}>{tweet}</div>
+              <div className={styles.tweet}>{tweet}</div>
             
           </div>
-
-
-
-
+          
           <div></div>
         </div>
         <div className={styles.containerRight}>
