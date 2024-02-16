@@ -95,10 +95,7 @@ function Home() {
             <div className={styles.tweet}>{tweets}</div>
 
           </div>
-
-
-
-
+          
           <div></div>
         </div>
         <div className={styles.containerRight}>
