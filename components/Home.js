@@ -4,12 +4,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { logout } from '../reducers/user';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTweet } from '../reducers/tweets';
+import { addTweet, loadTweets } from '../reducers/tweets';
+import Tweet from '../components/Tweet';
 
 function Home() {
   const [message, setMessage] = useState('');
   const [remainingChars, setRemainingChars] = useState(280);
-  const [tweets, setTweets] = useState([]); //Etat pour stoker les tweets ajoutés
+  //const [showTweets, setTweets] = useState([]); //Etat pour stoker les tweets ajoutés
+
+  console.log(message);
 
   const handleMessageChange = (event) => {
     const inputMessage = event.target.value;
@@ -22,13 +25,13 @@ function Home() {
   const user = useSelector((state) => state.user.value);
   const tweet = useSelector((state) => state.tweets.value)
 
-  // useEffect(() => {
-  //   fetch('http://localhost:3000/tweets')
-  //   .then(response => response.json())
-  //   .then (data =>{
-  //     dispatch(addTweet(data))
-  //   })
-  // },[]);
+  useEffect(() => {
+    fetch('http://localhost:3000/tweets')
+      .then(response => response.json())
+      .then(data => {
+        dispatch(loadTweets(data.tweet))
+      })
+  }, []);
 
   const handleClickIcon = () => {
     console.log('Direction Home');
@@ -41,21 +44,27 @@ function Home() {
   }
 
   const handleAddTweet = () => {
-    
-    fetch(`http://localhost:3000/tweet/${user.token}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ content: message }),
-}).then(response => response.json())
-    .then(data => {
+
+    fetch(`http://localhost:3000/tweets/${user.token}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content: message }),
+    }).then(response => response.json())
+      .then(data => {
         console.log(data)
         if (data.result) {
-            dispatch(addTweet({ content: message }));
-            setMessage('');
+          const createdTweet = { ...data.tweet, author: user }; // Penser a utiliser author pour les maj de tweet par exemple
+          dispatch(addTweet(createdTweet));
+          setMessage('');
         }
-    });
-   
+      });
+
   }
+
+  const tweets = tweet.map((data, i) => {
+    if (!tweet.length <= 0)
+      return <Tweet {...data} key={i} />
+  })
 
 
   return (
@@ -74,17 +83,17 @@ function Home() {
 
         <div className={styles.containerCenter}>
           <h1 className={styles.title}>Home</h1>
-          
+
           <div className={styles.addTweet}>
-            <input className={styles.addmessage} type="text" placeholder=" What's up?"value={message} onChange={handleMessageChange} maxLength={280}/>
+            <input className={styles.addmessage} type="text" placeholder=" What's up?" value={message} onChange={handleMessageChange} maxLength={280} />
             <span className={styles.remainingChars}>{remainingChars}</span>
             <button className={styles.tweetButton} onClick={handleAddTweet}>Tweet</button>
           </div>
 
           <div className={styles.tweetAdded}>
-            
-              <div key={index} className={styles.tweet}>{tweet}</div>
-            
+
+            <div className={styles.tweet}>{tweets}</div>
+
           </div>
 
 

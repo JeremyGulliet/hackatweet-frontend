@@ -12,9 +12,10 @@ export const tweetsSlice = createSlice({
             state.value.push(action.payload)
         },
 
-        // loadTweets: (state) => {
-        //     state.value.
-        // }
+        loadTweets: (state, action) => {
+            state.value = action.payload
+        },
+
         deleteTweet: (state, action) => {
             state.value.filter(tweet => tweet.user !== action.payload.user) //content si fonctionne pas
         }
@@ -26,5 +27,5 @@ export const tweetsSlice = createSlice({
     },
 });
 
-export const { addTweet, loadTweet, deleteTweet, updateTweet } = tweetsSlice.actions;
+export const { addTweet, loadTweets, deleteTweet, updateTweet } = tweetsSlice.actions;
 export default tweetsSlice.reducer;
